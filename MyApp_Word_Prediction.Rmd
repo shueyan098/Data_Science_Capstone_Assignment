@@ -1,0 +1,45 @@
+---
+title: "MyApp_Word_Prediction"
+author: "Eng"
+date: "June 4, 2019"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Introduction
+
+This is an app created for Data Science Capstone Coursera Project. This app is about upcoming word prediction based on a given phase. Users are allowed to type in a phase for prediction. Please be noted that due to limited machine's computation power, the prediction is performed based on simple n-grams algorithm and might not be perfect. Please also allow some delay while getting output as well. The performance of this prediction app can be improved by increasing the machine's computation power in future.   
+
+For ui.R and server.R, please see: "" 
+
+## Application
+
+### Input
+
+Users are allowed to type in a phase, and leave out the last word. Click on "Submit" button and the application will run.
+
+### Estimated Upcoming Word
+
+The estimated upcoming word will appear once the application completed. As mentioned, due to limited machine's computation power, the result will appear in approximately 20 sec time.  
+
+## Example
+
+Users may type in the example phases here to see what are the result.
+
+Example 1: "Hello darling, can you be my"  
+Example 2: "Thank you for your"  
+Example 3: "Please give me your"  
+
+## Algorithm 
+
+Due to limited machine's computation power, a simple algorithm is used for this prediction, as follows:
+
+1. Data sources used in the algorithm are the Twitter, News and Blogs data.  
+2. Only data entries which contain the words from input phase will be taken into account (subset data).  
+3. Get n-grams frequency from the subset data. 4-grams, 3-grams and 2-grams are used in the prediction.  
+4. Consider the last 3 words from input phase and match with 4-gram that with the highest frequency.  
+5. If there is a match, return the last word of 4-gram as estimated upcoming word. If there is no match, repeat step 4 & 5 with comparison to 3-grams and 2-grams.  
+
