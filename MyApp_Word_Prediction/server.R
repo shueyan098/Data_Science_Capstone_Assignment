@@ -14,11 +14,6 @@ library(ngram)
 library(dplyr)
 library(stringr)
 
-### Load dataset
-en_us_tw <- readRDS("~/data/en_us_tw.RDS")
-en_us_blog <- readRDS("~/data/en_us_blog.RDS")
-en_us_news <- readRDS("~/data/en_us_news.RDS")
-
 ### Create function - Tokenization - clean text
 tokenmaker <- function(x) {
   corpus <- VCorpus(VectorSource(x))
@@ -64,6 +59,12 @@ forthgrams <- function(x) {
 
 ### Prediction Algorithm 
 nextword <- function(x) {
+  
+  ### Load dataset
+  en_us_tw <- readRDS("data/en_us_tw.RDS")
+  en_us_blog <- readRDS("data/en_us_blog.RDS")
+  en_us_news <- readRDS("data/en_us_news.RDS")
+  
   inputtextclean <- gsub("[^a-zA-Z ]+", "", x)
   inputtextclean <- gsub("( )( )+", " ", inputtextclean)
   inputtextclean <- gsub("^ ", "", inputtextclean)
@@ -82,7 +83,8 @@ nextword <- function(x) {
     blog <- en_us_blog[grepl(previoustext, en_us_blog, ignore.case=TRUE)]
     news <- en_us_news[grepl(previoustext, en_us_news, ignore.case=TRUE)]
     alltext <- c(tw, blog, news)
-    rm(tw, blog, news)
+    rm(tw, blog, news, en_us_tw, en_us_blog, en_us_news) 
+    invisible(gc())
     
     if(length(alltext) == 0) {
       cur_loop <- cur_loop + 1
@@ -117,7 +119,6 @@ nextword <- function(x) {
 shinyServer(function(input, output) {
   
   ntext <- eventReactive(input$button1, {
-    #runif(input$text1)
     nextword(input$text1)
   })
     
